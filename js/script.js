@@ -10,13 +10,20 @@ $(function () {
   // useful when saving the description in local storage?
   // 
   var plans = [];
-  var currentHour = dayjs().format('H');
+  var currentHour = dayjs().format('HH');
 
   $('.btn').click(function () {
     console.log($(this).siblings('textarea').val());
     console.log($(this).parent().attr('id')); 
     console.log(currentHour);
   });
+
+  var hour = $('[id*="hour-"]').eq(0).attr('id')[5] + $('[id*="hour-"]').eq(0).attr('id')[6];
+
+  console.log(hour < currentHour);
+  console.log($('[id*="hour-"]').length);
+  console.log($('[id*="hour-"]').eq(2).attr('id')[5] + $('[id*="hour-"]').eq(2).attr('id')[6]);
+  console.log(currentHour);
   /**
    * variables to store once clicked:
    * text value
@@ -34,15 +41,25 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // code to display the current date in the header of the page.
-  var dateEl = $('#currentDay');
-  var timeEl = 0
+  
+  
 
   setInterval(function () {
+    var timeEl = 0;
     timeEl++;
-    dateEl.text(dayjs().format('dddd, MMMM D'))
-  }, 1000);
+    $('#currentDay').text(dayjs().format('dddd, MMMM D'));
+    for (var i = 0; i < $('[id*="hour-"]').length; i++) {
+      var hour = $('[id*="hour-"]').eq(i).attr('id')[5] + $('[id*="hour-"]').eq(i).attr('id')[6];
+      if (hour < currentHour) {
+        $('[id*="hour-"]').eq(i).removeClass('present future').addClass('past');
+      } else if (hour == currentHour) {
+        $('[id*="hour-"]').eq(i).removeClass('future past').addClass('present');
+      } else if (hour > currentHour) {
+        $('[id*="hour-"]').eq(i).removeClass('present past').addClass('future');
+      };
+    };
+  }, 6000);
 
-  console.log(dateEl);
 
 
 });
