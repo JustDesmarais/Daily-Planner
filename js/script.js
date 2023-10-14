@@ -1,7 +1,7 @@
 // full function
 $(function () {
   
-  var plans = [];
+  var plans = [{}];
   var currentHour = dayjs().format('HH');
 
   $('.btn').click(function () { //event listener to save text entry
