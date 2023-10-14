@@ -4,6 +4,8 @@ $(function () {
   var plans = [];
   var currentHour = dayjs().format('HH');
 
+  console.log(plans);
+
   $('.btn').click(function () { //event listener to save text entry
     var date = dayjs().format('dddd, MMMM D');
     var block = $(this).parent().attr('id');
@@ -35,13 +37,17 @@ $(function () {
   }, 1000);
 
   function populateBlocks() { // function to pull data from local storage and have it displayed on-screen
-    plans = JSON.parse(localStorage.getItem('planData'));
+    eventPlans = JSON.parse(localStorage.getItem('planData'));
 
-    for (var i = 0; i < plans.length; i++) {
-       var blockID = '#' + plans[i].block;
-       $(blockID).children('textarea').text(plans[i].planText);
-    }
+    if (eventPlans !== null) {
+      plans = eventPlans;
+      for (var i = 0; i < plans.length; i++) {
+         var blockID = '#' + plans[i].block;
+         $(blockID).children('textarea').text(plans[i].planText);
+      } 
+    } else return;
   };
+
 
 populateBlocks(); // calls function to populate text fields
 
